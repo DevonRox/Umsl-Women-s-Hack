@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BloomPath - Recovery & Care Navigation</title>
+<title>HerBloom - Recovery & Care Navigation</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,6 +23,7 @@
     --text-mid: #6B5042;
     --text-light: #A08070;
     --border: rgba(180,130,100,0.18);
+    --shadow: rgba(140,90,60,0.08);
     --font-display: 'Playfair Display', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
   }
@@ -223,6 +224,8 @@
     background: var(--warm-white);
   }
 
+  .form-group select option { background: var(--warm-white); }
+
   .btn-primary {
     background: var(--terracotta);
     color: white;
@@ -251,20 +254,6 @@
   }
 
   .user-context strong { color: var(--text-dark); font-weight: 500; }
-
-  .track-badge {
-    display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 500;
-    padding: 0.25rem 0.7rem;
-    border-radius: 999px;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-  }
-
-  .track-badge.csection { background: var(--terracotta-light); color: var(--terracotta-dark); }
-  .track-badge.miscarriage { background: var(--sage-light); color: var(--sage-dark); }
 
   .task-list { display: flex; flex-direction: column; gap: 0.8rem; }
 
@@ -318,7 +307,7 @@
     gap: 1rem;
   }
 
-  #flowerSvg { width: 180px; height: 200px; transition: transform 0.25s ease; }
+  #flowerSvg { width: 180px; height: 200px; }
 
   .flower-caption {
     font-size: 0.85rem;
@@ -326,6 +315,27 @@
     text-align: center;
     line-height: 1.5;
     max-width: 200px;
+  }
+
+  .btn-save {
+    background: white;
+    color: var(--text-mid);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.45rem 1.2rem;
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+
+  .btn-save:hover { border-color: var(--terracotta); color: var(--terracotta); }
+
+  .btn-save.saved {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: white;
   }
 
   .generating-tasks {
@@ -392,13 +402,15 @@
     margin-bottom: 1rem;
   }
 
+  .chat-window::-webkit-scrollbar { width: 4px; }
+  .chat-window::-webkit-scrollbar-thumb { background: var(--rose); border-radius: 99px; }
+
   .msg {
     max-width: 78%;
     padding: 0.75rem 1rem;
     border-radius: 16px;
     font-size: 0.88rem;
     line-height: 1.6;
-    white-space: pre-wrap;
   }
 
   .msg.user {
@@ -547,7 +559,10 @@
     color: rgba(255,255,255,0.45);
     text-decoration: none;
     margin-bottom: 0.4rem;
+    transition: color 0.2s;
   }
+
+  .footer-col a:hover { color: rgba(255,255,255,0.85); }
 
   .footer-bottom {
     max-width: 960px;
@@ -559,14 +574,12 @@
     font-size: 0.75rem;
   }
 
-  .fade-in {
-    animation: fadeIn 0.5s ease forwards;
-  }
-
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  .fade-in { animation: fadeIn 0.5s ease forwards; }
 
   .empty-chat {
     flex: 1;
@@ -581,6 +594,64 @@
 
   .empty-chat p { font-size: 0.85rem; color: var(--text-mid); text-align: center; }
 
+  .track-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .track-badge.csection { background: var(--terracotta-light); color: var(--terracotta-dark); }
+  .track-badge.miscarriage { background: var(--sage-light); color: var(--sage-dark); }
+
+  .garden-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .garden-empty {
+    border: 1px dashed var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: var(--text-light);
+    text-align: center;
+    background: linear-gradient(180deg, rgba(245, 237, 228, 0.55), rgba(255, 253, 249, 0.92));
+  }
+
+  .garden-item {
+    background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(245, 237, 228, 0.72));
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1rem;
+    box-shadow: 0 10px 24px var(--shadow);
+  }
+
+  .garden-item svg {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto 0.75rem;
+  }
+
+  .garden-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+  }
+
+  .garden-meta {
+    font-size: 0.76rem;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
   @media (max-width: 700px) {
     .hero-inner, .two-col { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr 1fr; }
@@ -590,7 +661,7 @@
 </head>
 <body>
 <nav>
-  <div class="nav-logo">Bloom<span>Path</span></div>
+  <div class="nav-logo">Her<span>Bloom</span></div>
   <div class="nav-tag">Hackathon Prototype</div>
 </nav>
 
@@ -690,8 +761,15 @@
           </g>
         </svg>
         <div class="flower-caption" id="flowerCaption">Complete today's tasks to watch your flower bloom.</div>
+        <button class="btn-save" id="saveBtn" style="display:none" onclick="saveFlowerToGarden()">Add flower to garden</button>
       </div>
     </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">4. Garden</div>
+    <h2>Your garden</h2>
+    <div id="gardenGrid" class="garden-grid"></div>
   </div>
 </main>
 
@@ -735,7 +813,7 @@
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-brand">BloomPath</div>
+      <div class="footer-brand">HerBloom</div>
       <div class="footer-brand-tagline">24/7 compassionate support for women recovering from gynecologic procedures.</div>
     </div>
     <div class="footer-col">
@@ -763,7 +841,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span>&copy; 2026 BloomPath Health, Inc. All rights reserved.</span>
+    <span>&copy; 2026 HerBloom Health, Inc. All rights reserved.</span>
     <span>Not a substitute for professional medical advice.</span>
   </div>
 </footer>
@@ -773,16 +851,17 @@ let userProfile = {};
 let tasks = [];
 let completedCount = 0;
 let chatHistory = [];
+let activeGardenFlower = '';
+const GARDEN_STORAGE_KEY = 'herbloom-garden';
 
 const FEATHERLESS_API_KEY = "rc_3a5ea2001b87eff8ce6163ad2a4ab9373c184c98ecd2986efdbe0d8ea0a6f88b";
 const FEATHERLESS_BASE = "https://api.featherless.ai/v1";
 const MODEL = "meta-llama/Meta-Llama-3.1-8B-Instruct";
 
 function getChatSystemPrompt() {
-  const track = userProfile.track === "csection" ? "C-section" : "miscarriage";
-  const days = userProfile.days || "early";
-
-  return `You are BloomPath, a warm and compassionate recovery companion for women after ${track}.
+  const track = userProfile.track === 'csection' ? 'C-section' : 'miscarriage';
+  const days = userProfile.days || 'early';
+  return `You are HerBloom, a warm and compassionate recovery companion for women after ${track}.
 The user is approximately ${days} days post-procedure.
 
 Your role:
@@ -798,13 +877,13 @@ You are NOT a doctor. Always frame clinical information as general guidance and 
 }
 
 function getTaskSystemPrompt() {
-  const trackName = userProfile.track === "csection" ? "post C-section" : "post miscarriage";
+  const trackName = userProfile.track === 'csection' ? 'post C-section' : 'post miscarriage';
   const days = userProfile.days;
   const emotional = userProfile.emotional;
   const name = userProfile.name;
 
   return `You generate exactly 3 daily recovery tasks for ${name}, a woman ${days} days ${trackName}.
-Emotional context: "${emotional || "no specific note"}"
+Emotional context: "${emotional || 'no specific note'}"
 
 Return ONLY a JSON array with 3 objects. Each object has:
 - "title": short task name (under 8 words)
@@ -816,132 +895,98 @@ Be specific and appropriate to the day range. Never suggest anything medically u
 Return ONLY the JSON array, no other text.`;
 }
 
-function getFallbackTasks() {
-  if (userProfile.track === "csection") {
-    return [
-      { title: "Check your incision", description: "Look for redness, swelling, or discharge and note any change from yesterday." },
-      { title: "Try gentle movement", description: "Take a slow 5-minute walk or do seated breathing to support circulation." },
-      { title: "Protect rest time", description: "Set aside 10 quiet minutes for water, a snack, and full-body rest." }
-    ];
-  }
-
-  return [
-    { title: "Notice body changes", description: "Check in on bleeding, cramping, and energy level compared with yesterday." },
-    { title: "Nourish gently", description: "Drink water and have one easy, comforting meal without pressure." },
-    { title: "Make space to feel", description: "Give yourself permission to pause and notice whatever emotions come up today." }
-  ];
-}
-
-function parseTaskResponse(rawText) {
-  const cleaned = rawText.replace(/```json|```/gi, "").trim();
-  const firstBracket = cleaned.indexOf("[");
-  const lastBracket = cleaned.lastIndexOf("]");
-  const candidate = firstBracket !== -1 && lastBracket !== -1
-    ? cleaned.slice(firstBracket, lastBracket + 1)
-    : cleaned;
-
-  const parsed = JSON.parse(candidate);
-  if (!Array.isArray(parsed) || parsed.length !== 3) {
-    throw new Error("Task response was not a 3-item array.");
-  }
-
-  return parsed.map((task) => ({
-    title: String(task.title || "Recovery task").trim(),
-    description: String(task.description || "Take one gentle recovery step today.").trim()
-  }));
-}
-
-async function callFeatherless(messages, options = {}) {
-  const response = await fetch(`${FEATHERLESS_BASE}/chat/completions`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${FEATHERLESS_API_KEY}`
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: options.maxTokens || 350,
-      temperature: options.temperature ?? 0.7,
-      messages
-    })
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`API ${response.status}: ${errorText}`);
-  }
-
-  const data = await response.json();
-  const text = data.choices?.[0]?.message?.content?.trim();
-  if (!text) {
-    throw new Error("Empty response from model.");
-  }
-  return text;
-}
-
 async function startJourney() {
-  const name = document.getElementById("userName").value.trim();
-  const age = document.getElementById("userAge").value.trim();
-  const track = document.getElementById("userTrack").value;
-  const days = document.getElementById("userDays").value;
-  const emotional = document.getElementById("userEmotional").value.trim();
+  const name = document.getElementById('userName').value.trim();
+  const age = document.getElementById('userAge').value.trim();
+  const track = document.getElementById('userTrack').value;
+  const days = document.getElementById('userDays').value;
+  const emotional = document.getElementById('userEmotional').value.trim();
 
   if (!name || !track) {
-    alert("Please enter your name and select a recovery track.");
+    alert('Please enter your name and select a recovery track.');
     return;
   }
 
   userProfile = { name, age, track, days, emotional };
-  chatHistory = [];
 
-  const journeySection = document.getElementById("journeySection");
-  journeySection.style.display = "grid";
-  journeySection.scrollIntoView({ behavior: "smooth", block: "start" });
+  const journeySection = document.getElementById('journeySection');
+  journeySection.style.display = 'grid';
+  journeySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  resetGardenButton();
 
-  const trackLabel = track === "csection" ? "Post C-section recovery" : "Post miscarriage support";
-  const contextBox = document.getElementById("userContextBox");
-  contextBox.innerHTML = `
-    <strong>${name}${age ? ", age " + age : ""}</strong><br>
-    Focus: ${trackLabel}<br>
-    ${emotional ? "Emotional note: " + emotional : "Emotional note: none added"}
-  `;
+  const trackLabel = track === 'csection' ? 'Post C-section recovery' : 'Post miscarriage support';
+  document.getElementById('userContextBox').innerHTML =
+    `<strong>${name}${age ? ', age ' + age : ''}</strong><br>
+     Focus: ${trackLabel}<br>
+     ${emotional ? 'Emotional note: ' + emotional : ''}`;
 
-  const badge = document.createElement("span");
+  const badge = document.createElement('span');
   badge.className = `track-badge ${track}`;
-  badge.textContent = track === "csection" ? "C-Section Recovery" : "Miscarriage Support";
-  contextBox.prepend(badge);
-  contextBox.querySelector("span").after(document.createElement("br"));
+  badge.textContent = track === 'csection' ? 'C-Section Recovery' : 'Miscarriage Support';
+  document.getElementById('userContextBox').prepend(badge);
+  document.getElementById('userContextBox').querySelector('span').after(document.createElement('br'));
 
   await generateTasks();
+  chatHistory = [];
 }
 
 async function generateTasks() {
-  const taskList = document.getElementById("taskList");
+  const taskList = document.getElementById('taskList');
   taskList.innerHTML = '<div class="generating-tasks"><span class="spinner"></span> Preparing your care path...</div>';
 
   try {
-    const raw = await callFeatherless([
-      { role: "system", content: getTaskSystemPrompt() },
-      { role: "user", content: "Generate my 3 tasks for today." }
-    ], { maxTokens: 400, temperature: 0.6 });
+    const res = await fetch(`${FEATHERLESS_BASE}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${FEATHERLESS_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 400,
+        temperature: 0.6,
+        messages: [
+          { role: 'system', content: getTaskSystemPrompt() },
+          { role: 'user', content: 'Generate my 3 tasks for today.' }
+        ]
+      })
+    });
 
-    tasks = parseTaskResponse(raw);
-  } catch (error) {
-    console.error("Task generation failed:", error);
-    tasks = getFallbackTasks();
+    const data = await res.json();
+    const raw = data.choices?.[0]?.message?.content || '';
+    const clean = raw.replace(/```json|```/g, '').trim();
+    tasks = JSON.parse(clean);
+    renderTasks(tasks);
+  } catch (err) {
+    tasks = getDefaultTasks();
+    renderTasks(tasks);
+  }
+}
+
+function getDefaultTasks() {
+  if (userProfile.track === 'csection') {
+    return [
+      { title: 'Check in on your incision', description: 'Gently inspect for redness, swelling, or discharge and note any changes.' },
+      { title: 'Do one gentle body action', description: 'Try a slow 5-minute walk or seated deep breathing to support circulation.' },
+      { title: 'Support your emotional wellbeing', description: 'Spend 10 minutes doing something calming - journaling, music, or rest.' }
+    ];
   }
 
-  renderTasks(tasks);
+  return [
+    { title: 'Check in on your physical recovery', description: 'Note any cramping, bleeding, or discomfort and compare to yesterday.' },
+    { title: 'Give your body gentle care', description: 'Hydrate well and eat one nourishing meal without pressure or rules.' },
+    { title: 'Take space for your emotions', description: 'You have full permission to feel whatever comes up today - no timeline.' }
+  ];
 }
 
 function renderTasks(taskArray) {
-  const taskList = document.getElementById("taskList");
+  const taskList = document.getElementById('taskList');
   completedCount = 0;
-  taskList.innerHTML = "";
+  taskList.innerHTML = '';
 
   taskArray.forEach((task, i) => {
-    const div = document.createElement("div");
-    div.className = "task-item fade-in";
+    const div = document.createElement('div');
+    div.className = 'task-item fade-in';
     div.style.animationDelay = `${i * 0.1}s`;
     div.innerHTML = `
       <div class="task-checkbox">
@@ -954,7 +999,7 @@ function renderTasks(taskArray) {
         <div class="task-desc">${task.description}</div>
       </div>`;
 
-    div.addEventListener("click", () => toggleTask(div));
+    div.addEventListener('click', () => toggleTask(div));
     taskList.appendChild(div);
   });
 
@@ -963,8 +1008,8 @@ function renderTasks(taskArray) {
 }
 
 function toggleTask(el) {
-  const wasDone = el.classList.contains("done");
-  el.classList.toggle("done");
+  const wasDone = el.classList.contains('done');
+  el.classList.toggle('done');
   completedCount += wasDone ? -1 : 1;
   completedCount = Math.max(0, Math.min(tasks.length, completedCount));
   updateProgress();
@@ -974,12 +1019,12 @@ function toggleTask(el) {
 function updateProgress() {
   const total = tasks.length || 3;
   const pct = Math.round((completedCount / total) * 100);
-  document.getElementById("progressBar").style.width = `${pct}%`;
-  document.getElementById("growthCount").textContent = `${completedCount} / ${total} tasks`;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('growthCount').textContent = `${completedCount} / ${total} tasks`;
 }
 
 function updateFlower(done) {
-  applyTrackFlower();
+  applyTrackFlower(done);
 
   const stages = {
     stem: done >= 1 ? 1 : 0,
@@ -996,92 +1041,251 @@ function updateFlower(done) {
   Object.entries(stages).forEach(([id, opacity]) => {
     const el = document.getElementById(id);
     if (el) {
-      el.style.transition = "opacity 0.8s ease";
+      el.style.transition = 'opacity 0.8s ease';
       el.style.opacity = opacity;
     }
   });
 
-  const caption = document.getElementById("flowerCaption");
+  const caption = document.getElementById('flowerCaption');
+  const saveBtn = document.getElementById('saveBtn');
+
   if (done === 0) {
     caption.textContent = "Complete today's tasks to watch your flower bloom.";
+    saveBtn.style.display = 'none';
   } else if (done === 1) {
-    caption.textContent = "Your stem is growing. Keep going.";
+    caption.textContent = 'Your stem is growing. Keep going.';
+    saveBtn.style.display = 'none';
   } else if (done === 2) {
-    caption.textContent = "Petals are opening. One more task!";
+    caption.textContent = 'Petals are opening. One more task!';
+    saveBtn.style.display = 'none';
   } else {
     caption.textContent = "Your flower is in full bloom. Today's journey is complete.";
+    saveBtn.style.display = 'inline-block';
   }
-
-  document.getElementById("flowerSvg").style.transform = done >= 3 ? "scale(1.03)" : "scale(1)";
 }
 
-function applyTrackFlower() {
-  const petals = document.querySelectorAll("#petals ellipse");
-  const bud = document.getElementById("bud");
-  const center = document.getElementById("flowerCenter");
-  const inner = document.getElementById("flowerCenterInner");
-  const seed = document.getElementById("seed");
-  const sparkleDots = document.querySelectorAll("#sparkles circle");
+function applyTrackFlower(done) {
+  const petals = document.getElementById('petals');
+  const petalEls = petals ? petals.querySelectorAll('ellipse') : [];
+  const flowerCenter = document.getElementById('flowerCenter');
+  const flowerCenterInner = document.getElementById('flowerCenterInner');
+  const bud = document.getElementById('bud');
+  const stem = document.getElementById('stem');
+  const leaf1 = document.getElementById('leaf1');
+  const leaf2 = document.getElementById('leaf2');
+  const sparkles = document.getElementById('sparkles');
+  const seed = document.getElementById('seed');
 
-  if (userProfile.track === "miscarriage") {
-    const petalColors = ["#C8DCC9", "#9DBFA0", "#DCE8DA", "#7A9E7E"];
-    petals.forEach((petal, index) => petal.setAttribute("fill", petalColors[index]));
-    bud.setAttribute("fill", "#C8DCC9");
-    center.setAttribute("fill", "#7A9E7E");
-    inner.setAttribute("fill", "#4A7050");
-    seed.setAttribute("fill", "#B7C8B8");
-    sparkleDots.forEach((dot, index) => {
-      dot.setAttribute("fill", ["#9DBFA0", "#DCE8DA", "#7A9E7E", "#C8DCC9"][index]);
+  if (userProfile.track === 'miscarriage') {
+    const petalPalette = ['#C8DCC9', '#9DBFA0', '#DCE8DA', '#7A9E7E'];
+    petalEls.forEach((petal, index) => {
+      petal.setAttribute('fill', petalPalette[index] || petalPalette[0]);
+    });
+    if (bud) bud.setAttribute('fill', '#C8DCC9');
+    if (flowerCenter) flowerCenter.setAttribute('fill', '#7A9E7E');
+    if (flowerCenterInner) flowerCenterInner.setAttribute('fill', '#4A7050');
+    if (stem) stem.setAttribute('stroke', '#7A9E7E');
+    if (leaf1) leaf1.setAttribute('fill', '#7A9E7E');
+    if (leaf2) leaf2.setAttribute('fill', '#7A9E7E');
+    if (seed) seed.setAttribute('fill', '#B7C8B8');
+    if (sparkles) {
+      const dots = sparkles.querySelectorAll('circle');
+      const sparklePalette = ['#9DBFA0', '#DCE8DA', '#7A9E7E', '#C8DCC9'];
+      dots.forEach((dot, index) => dot.setAttribute('fill', sparklePalette[index] || sparklePalette[0]));
+    }
+    activeGardenFlower = buildGardenFlowerMarkup({
+      petals: petalPalette,
+      center: '#7A9E7E',
+      centerInner: '#4A7050',
+      bud: '#C8DCC9',
+      leaf: '#7A9E7E',
+      seed: '#B7C8B8',
+      sparkle: ['#9DBFA0', '#DCE8DA', '#7A9E7E', '#C8DCC9'],
+      petalShape: 'rounded'
     });
   } else {
-    const petalColors = ["#E8A87C", "#E8A87C", "#F0C4A0", "#E8A87C"];
-    petals.forEach((petal, index) => petal.setAttribute("fill", petalColors[index]));
-    bud.setAttribute("fill", "#E8C4A8");
-    center.setAttribute("fill", "#C4714A");
-    inner.setAttribute("fill", "#9E5535");
-    seed.setAttribute("fill", "#C4A882");
-    sparkleDots.forEach((dot, index) => {
-      dot.setAttribute("fill", ["#E8A87C", "#F0C4A0", "#C4714A", "#E8A87C"][index]);
+    const petalPalette = ['#E8A87C', '#E8A87C', '#F0C4A0', '#E8A87C'];
+    petalEls.forEach((petal, index) => {
+      petal.setAttribute('fill', petalPalette[index] || petalPalette[0]);
+    });
+    if (bud) bud.setAttribute('fill', '#E8C4A8');
+    if (flowerCenter) flowerCenter.setAttribute('fill', '#C4714A');
+    if (flowerCenterInner) flowerCenterInner.setAttribute('fill', '#9E5535');
+    if (stem) stem.setAttribute('stroke', '#7A9E7E');
+    if (leaf1) leaf1.setAttribute('fill', '#7A9E7E');
+    if (leaf2) leaf2.setAttribute('fill', '#7A9E7E');
+    if (seed) seed.setAttribute('fill', '#C4A882');
+    if (sparkles) {
+      const dots = sparkles.querySelectorAll('circle');
+      const sparklePalette = ['#E8A87C', '#F0C4A0', '#C4714A', '#E8A87C'];
+      dots.forEach((dot, index) => dot.setAttribute('fill', sparklePalette[index] || sparklePalette[0]));
+    }
+    activeGardenFlower = buildGardenFlowerMarkup({
+      petals: petalPalette,
+      center: '#C4714A',
+      centerInner: '#9E5535',
+      bud: '#E8C4A8',
+      leaf: '#7A9E7E',
+      seed: '#C4A882',
+      sparkle: ['#E8A87C', '#F0C4A0', '#C4714A', '#E8A87C'],
+      petalShape: 'tulip'
     });
   }
+
+  const flowerSvg = document.getElementById('flowerSvg');
+  flowerSvg.style.transform = done >= 3 ? 'scale(1.03)' : 'scale(1)';
+}
+
+function buildGardenFlowerMarkup(config) {
+  const isTulip = config.petalShape === 'tulip';
+  const petalMarkup = isTulip
+    ? `
+      <ellipse cx="90" cy="82" rx="10" ry="18" fill="${config.petals[0]}"/>
+      <ellipse cx="90" cy="82" rx="10" ry="18" fill="${config.petals[1]}" transform="rotate(45 90 100)"/>
+      <ellipse cx="90" cy="82" rx="10" ry="18" fill="${config.petals[2]}" transform="rotate(90 90 100)"/>
+      <ellipse cx="90" cy="82" rx="10" ry="18" fill="${config.petals[3]}" transform="rotate(135 90 100)"/>
+    `
+    : `
+      <ellipse cx="90" cy="78" rx="14" ry="14" fill="${config.petals[0]}"/>
+      <ellipse cx="74" cy="96" rx="12" ry="12" fill="${config.petals[1]}"/>
+      <ellipse cx="106" cy="96" rx="12" ry="12" fill="${config.petals[2]}"/>
+      <ellipse cx="90" cy="112" rx="13" ry="12" fill="${config.petals[3]}"/>
+    `;
+
+  return `
+    <svg viewBox="0 0 180 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="72" y="168" width="36" height="22" rx="4" fill="#C4714A" opacity="0.8"/>
+      <rect x="68" y="163" width="44" height="10" rx="5" fill="#9E5535" opacity="0.8"/>
+      <line x1="90" y1="163" x2="90" y2="110" stroke="${config.leaf}" stroke-width="4" stroke-linecap="round"/>
+      <ellipse cx="75" cy="138" rx="14" ry="7" fill="${config.leaf}" transform="rotate(-30 75 138)"/>
+      <ellipse cx="105" cy="125" rx="14" ry="7" fill="${config.leaf}" transform="rotate(30 105 125)"/>
+      <g>${petalMarkup}</g>
+      <circle cx="90" cy="100" r="12" fill="${config.center}"/>
+      <circle cx="90" cy="100" r="7" fill="${config.centerInner}"/>
+      <ellipse cx="90" cy="108" rx="8" ry="12" fill="${config.bud}" opacity="0.25"/>
+      <circle cx="55" cy="80" r="3" fill="${config.sparkle[0]}"/>
+      <circle cx="125" cy="75" r="2" fill="${config.sparkle[1]}"/>
+      <circle cx="60" cy="95" r="2" fill="${config.sparkle[2]}"/>
+      <circle cx="120" cy="90" r="3" fill="${config.sparkle[3]}"/>
+      <ellipse cx="90" cy="140" rx="7" ry="9" fill="${config.seed}" opacity="0.2"/>
+    </svg>
+  `;
+}
+
+function resetGardenButton() {
+  const saveBtn = document.getElementById('saveBtn');
+  saveBtn.classList.remove('saved');
+  saveBtn.textContent = 'Add flower to garden';
+}
+
+function saveFlowerToGarden() {
+  if (completedCount < (tasks.length || 3)) return;
+  const saveBtn = document.getElementById('saveBtn');
+  if (saveBtn.classList.contains('saved')) return;
+
+  const garden = loadGarden();
+  const entry = {
+    name: userProfile.name || 'Guest',
+    track: userProfile.track,
+    label: userProfile.track === 'csection' ? 'C-section bloom' : 'Miscarriage support bloom',
+    days: userProfile.days,
+    emotional: userProfile.emotional || 'No emotional note added',
+    createdAt: new Date().toLocaleDateString(),
+    markup: activeGardenFlower
+  };
+
+  garden.unshift(entry);
+  localStorage.setItem(GARDEN_STORAGE_KEY, JSON.stringify(garden.slice(0, 8)));
+  renderGarden();
+
+  saveBtn.classList.add('saved');
+  saveBtn.textContent = 'Added to garden';
+}
+
+function loadGarden() {
+  try {
+    return JSON.parse(localStorage.getItem(GARDEN_STORAGE_KEY) || '[]');
+  } catch (err) {
+    return [];
+  }
+}
+
+function renderGarden() {
+  const gardenGrid = document.getElementById('gardenGrid');
+  const garden = loadGarden();
+
+  if (!garden.length) {
+    gardenGrid.innerHTML = '<div class="garden-empty">Finish a daily journey and add your first flower here.</div>';
+    return;
+  }
+
+  gardenGrid.innerHTML = garden.map((entry) => `
+    <article class="garden-item">
+      ${entry.markup}
+      <div class="garden-name">${entry.name}'s ${entry.label}</div>
+      <div class="garden-meta">Saved ${entry.createdAt}<br>Day ${entry.days} recovery track</div>
+    </article>
+  `).join('');
 }
 
 async function sendMessage() {
-  const input = document.getElementById("chatInput");
+  const input = document.getElementById('chatInput');
   const text = input.value.trim();
   if (!text) return;
 
-  document.getElementById("emptyChat").style.display = "none";
-  addMessage("user", text);
-  input.value = "";
-  input.style.height = "auto";
+  document.getElementById('emptyChat').style.display = 'none';
 
-  chatHistory.push({ role: "user", content: text });
+  addMessage('user', text);
+  input.value = '';
+  input.style.height = 'auto';
+
+  chatHistory.push({ role: 'user', content: text });
+
   showTyping(true);
-  document.getElementById("sendBtn").disabled = true;
+  document.getElementById('sendBtn').disabled = true;
 
   try {
-    const reply = await callFeatherless([
-      { role: "system", content: getChatSystemPrompt() },
-      ...chatHistory
-    ], { maxTokens: 300, temperature: 0.7 });
+    const res = await fetch(`${FEATHERLESS_BASE}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${FEATHERLESS_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 300,
+        temperature: 0.7,
+        messages: [
+          { role: 'system', content: getChatSystemPrompt() },
+          ...chatHistory
+        ]
+      })
+    });
 
-    chatHistory.push({ role: "assistant", content: reply });
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content?.trim();
+
+    if (!reply) throw new Error('Empty response');
+
+    chatHistory.push({ role: 'assistant', content: reply });
     showTyping(false);
-    addMessage("ai", reply);
-  } catch (error) {
-    console.error("Chat request failed:", error);
+    addMessage('ai', reply);
+  } catch (err) {
     showTyping(false);
-    addMessage("error", "Couldn't reach the support companion. Check the API key, model access, or browser console and try again.");
+    if (FEATHERLESS_API_KEY === 'YOUR_FEATHERLESS_API_KEY') {
+      addMessage('error', 'Add your Featherless API key in the script to enable the AI companion.');
+    } else {
+      addMessage('error', "Couldn't reach the support companion. Please check your connection and try again.");
+    }
   }
 
-  document.getElementById("sendBtn").disabled = false;
+  document.getElementById('sendBtn').disabled = false;
 }
 
 function addMessage(type, text) {
-  const win = document.getElementById("chatWindow");
-  const typing = document.getElementById("typingIndicator");
-  const div = document.createElement("div");
+  const win = document.getElementById('chatWindow');
+  const typing = document.getElementById('typingIndicator');
+  const div = document.createElement('div');
   div.className = `msg ${type} fade-in`;
   div.textContent = text;
   win.insertBefore(div, typing);
@@ -1089,11 +1293,13 @@ function addMessage(type, text) {
 }
 
 function showTyping(visible) {
-  const el = document.getElementById("typingIndicator");
-  el.classList.toggle("visible", visible);
-  const win = document.getElementById("chatWindow");
+  const el = document.getElementById('typingIndicator');
+  el.classList.toggle('visible', visible);
+  const win = document.getElementById('chatWindow');
   win.scrollTop = win.scrollHeight;
 }
+
+renderGarden();
 </script>
 </body>
 </html>
