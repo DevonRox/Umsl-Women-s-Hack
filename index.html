@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HerBloom - Recovery & Care Navigation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFFDF9;
+    --blush: #F5EDE4;
+    --rose: #E8C4A8;
+    --terracotta: #C4714A;
+    --terracotta-dark: #9E5535;
+    --terracotta-light: #F0D4C2;
+    --sage: #7A9E7E;
+    --sage-light: #C8DCC9;
+    --sage-dark: #4A7050;
+    --text-dark: #2C1F14;
+    --text-mid: #6B5042;
+    --text-light: #A08070;
+    --border: rgba(180,130,100,0.18);
+    --shadow: rgba(140,90,60,0.08);
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    font-family: var(--font-body);
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  nav {
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--terracotta); }
+
+  .nav-tag {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .hero {
+    background: var(--warm-white);
+    padding: 3.5rem 2rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero h1 em { color: var(--terracotta); font-style: normal; }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+    font-weight: 300;
+    max-width: 480px;
+  }
+
+  .growth-card {
+    background: var(--blush);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.4rem 1.5rem;
+  }
+
+  .growth-label {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+
+  .growth-count {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .progress-bar-wrap {
+    background: rgba(180,130,100,0.2);
+    border-radius: 999px;
+    height: 7px;
+    margin-bottom: 0.7rem;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--terracotta) 0%, #D4855A 100%);
+    transition: width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .growth-note {
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .section-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    color: var(--terracotta);
+    margin-bottom: 0.6rem;
+  }
+
+  .card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem 2.2rem;
+  }
+
+  .card h2 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 1.4rem;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .form-group label {
+    font-size: 0.78rem;
+    color: var(--text-mid);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .form-group input,
+  .form-group select {
+    border: 1px solid var(--border);
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 0.65rem 0.85rem;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--terracotta);
+    background: var(--warm-white);
+  }
+
+  .form-group select option { background: var(--warm-white); }
+
+  .btn-primary {
+    background: var(--terracotta);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.7rem 1.6rem;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 0.5rem;
+  }
+
+  .btn-primary:hover { background: var(--terracotta-dark); }
+  .btn-primary:active { transform: scale(0.98); }
+
+  .user-context {
+    background: var(--blush);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  .user-context strong { color: var(--text-dark); font-weight: 500; }
+
+  .task-list { display: flex; flex-direction: column; gap: 0.8rem; }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--cream);
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+
+  .task-item.done {
+    background: rgba(122,158,126,0.08);
+    border-color: rgba(122,158,126,0.3);
+  }
+
+  .task-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--rose);
+    border-radius: 6px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 0.2s;
+  }
+
+  .task-item.done .task-checkbox {
+    background: var(--sage);
+    border-color: var(--sage);
+  }
+
+  .task-checkbox svg { display: none; }
+  .task-item.done .task-checkbox svg { display: block; }
+
+  .task-content { flex: 1; }
+  .task-title { font-size: 0.92rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.2rem; }
+  .task-desc { font-size: 0.8rem; color: var(--text-mid); line-height: 1.5; }
+
+  .flower-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  #flowerSvg { width: 180px; height: 200px; }
+
+  .flower-caption {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    text-align: center;
+    line-height: 1.5;
+    max-width: 200px;
+  }
+
+  .btn-save {
+    background: white;
+    color: var(--text-mid);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.45rem 1.2rem;
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+
+  .btn-save:hover { border-color: var(--terracotta); color: var(--terracotta); }
+
+  .btn-save.saved {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: white;
+  }
+
+  .generating-tasks {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
+
+  .spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--rose);
+    border-top-color: var(--terracotta);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .chat-section {
+    background: var(--warm-white);
+    border-top: 1px solid var(--border);
+    padding: 4rem 2rem;
+  }
+
+  .chat-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .chat-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .chat-header h2 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .chat-header p {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+  }
+
+  .chat-window {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    min-height: 360px;
+    max-height: 480px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .chat-window::-webkit-scrollbar { width: 4px; }
+  .chat-window::-webkit-scrollbar-thumb { background: var(--rose); border-radius: 99px; }
+
+  .msg {
+    max-width: 78%;
+    padding: 0.75rem 1rem;
+    border-radius: 16px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .msg.user {
+    align-self: flex-end;
+    background: var(--terracotta);
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+
+  .msg.ai {
+    align-self: flex-start;
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--text-dark);
+    border-bottom-left-radius: 4px;
+  }
+
+  .msg.error {
+    align-self: center;
+    background: #FFF0EC;
+    border: 1px solid #F5C4B3;
+    color: #9E5535;
+    font-size: 0.82rem;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  .typing-indicator {
+    align-self: flex-start;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
+    padding: 0.75rem 1rem;
+    display: none;
+  }
+
+  .typing-indicator.visible { display: flex; gap: 4px; align-items: center; }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    background: var(--rose);
+    border-radius: 50%;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+  }
+
+  .chat-input-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-end;
+  }
+
+  .chat-input {
+    flex: 1;
+    border: 1px solid var(--border);
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    outline: none;
+    resize: none;
+    min-height: 48px;
+    max-height: 120px;
+    line-height: 1.5;
+    transition: border-color 0.2s;
+  }
+
+  .chat-input:focus { border-color: var(--terracotta); background: white; }
+  .chat-input::placeholder { color: var(--text-light); }
+
+  .send-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--terracotta);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .send-btn:hover { background: var(--terracotta-dark); }
+  .send-btn:active { transform: scale(0.95); }
+  .send-btn:disabled { background: var(--rose); cursor: not-allowed; }
+
+  .disclaimer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  footer {
+    background: var(--text-dark);
+    color: rgba(255,255,255,0.5);
+    padding: 3rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-brand-tagline {
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .footer-col h4 {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-col a {
+    display: block;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    margin-bottom: 0.4rem;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: rgba(255,255,255,0.85); }
+
+  .footer-bottom {
+    max-width: 960px;
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in { animation: fadeIn 0.5s ease forwards; }
+
+  .empty-chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    opacity: 0.5;
+    padding: 2rem;
+  }
+
+  .empty-chat p { font-size: 0.85rem; color: var(--text-mid); text-align: center; }
+
+  .track-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .track-badge.csection { background: var(--terracotta-light); color: var(--terracotta-dark); }
+  .track-badge.miscarriage { background: var(--sage-light); color: var(--sage-dark); }
+
+  .garden-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .garden-empty {
+    border: 1px dashed var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: var(--text-light);
+    text-align: center;
+    background: linear-gradient(180deg, rgba(245, 237, 228, 0.55), rgba(255, 253, 249, 0.92));
+  }
+
+  .garden-item {
+    background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(245, 237, 228, 0.72));
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1rem;
+    box-shadow: 0 10px 24px var(--shadow);
+  }
+
+  .garden-item svg {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto 0.75rem;
+  }
+
+  .garden-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+  }
+
+  .garden-meta {
+    font-size: 0.76rem;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 700px) {
+    .hero-inner, .two-col { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">Her<span>Bloom</span></div>
+  <div class="nav-tag">Hackathon Prototype</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>Your path to <em>gentle</em> recovery</h1>
+      <p class="hero-sub">Care navigation and post-procedure support - turned into a calming journey that helps women feel guided, encouraged, and less alone.</p>
+    </div>
+    <div class="growth-card">
+      <div class="growth-label">Today's growth</div>
+      <div class="growth-count" id="growthCount">0 / 3 tasks</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+      </div>
+      <div class="growth-note">Each completed task helps your seed bloom into a flower.</div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="card">
+    <div class="section-label">1. Welcome</div>
+    <h2>Your support profile</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" id="userName" placeholder="Your name" value="">
+      </div>
+      <div class="form-group">
+        <label>Age</label>
+        <input type="number" id="userAge" placeholder="Age" min="16" max="60" value="">
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom: 1rem;">
+      <label>Recovery track</label>
+      <select id="userTrack">
+        <option value="">Select your recovery journey...</option>
+        <option value="csection">Post C-section recovery</option>
+        <option value="miscarriage">Post miscarriage support</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin-bottom: 1rem;">
+      <label>Days since procedure</label>
+      <select id="userDays">
+        <option value="1">Day 1-2 (just home)</option>
+        <option value="5">Day 3-7 (first week)</option>
+        <option value="14">Week 2</option>
+        <option value="21">Week 3</option>
+        <option value="42">Week 4-6</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin-bottom: 1rem;">
+      <label>Emotional or mental support needs</label>
+      <input type="text" id="userEmotional" placeholder="e.g. feeling anxious, grieving, overwhelmed..." value="">
+    </div>
+    <button class="btn-primary" onclick="startJourney()">Start today's journey</button>
+  </div>
+
+  <div class="two-col" id="journeySection" style="display:none;">
+    <div class="card">
+      <div class="section-label">2. Guidance</div>
+      <h2>Today's care path</h2>
+      <div id="userContextBox" class="user-context"></div>
+      <div id="taskList" class="task-list">
+        <div class="generating-tasks">
+          <span class="spinner"></span> Preparing your care path...
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">3. Growth</div>
+      <h2>Your flower</h2>
+      <div class="flower-container">
+        <svg id="flowerSvg" viewBox="0 0 180 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="72" y="168" width="36" height="22" rx="4" fill="#C4714A" opacity="0.8"/>
+          <rect x="68" y="163" width="44" height="10" rx="5" fill="#9E5535" opacity="0.8"/>
+          <line x1="90" y1="163" x2="90" y2="110" stroke="#7A9E7E" stroke-width="4" stroke-linecap="round" id="stem" opacity="0"/>
+          <ellipse cx="75" cy="138" rx="14" ry="7" fill="#7A9E7E" transform="rotate(-30 75 138)" id="leaf1" opacity="0"/>
+          <ellipse cx="105" cy="125" rx="14" ry="7" fill="#7A9E7E" transform="rotate(30 105 125)" id="leaf2" opacity="0"/>
+          <ellipse cx="90" cy="108" rx="8" ry="12" fill="#E8C4A8" id="bud" opacity="0"/>
+          <g id="petals" opacity="0">
+            <ellipse cx="90" cy="82" rx="10" ry="18" fill="#E8A87C"/>
+            <ellipse cx="90" cy="82" rx="10" ry="18" fill="#E8A87C" transform="rotate(45 90 100)"/>
+            <ellipse cx="90" cy="82" rx="10" ry="18" fill="#F0C4A0" transform="rotate(90 90 100)"/>
+            <ellipse cx="90" cy="82" rx="10" ry="18" fill="#E8A87C" transform="rotate(135 90 100)"/>
+          </g>
+          <circle cx="90" cy="100" r="12" fill="#C4714A" id="flowerCenter" opacity="0"/>
+          <circle cx="90" cy="100" r="7" fill="#9E5535" id="flowerCenterInner" opacity="0"/>
+          <ellipse cx="90" cy="140" rx="7" ry="9" fill="#C4A882" id="seed"/>
+          <g id="sparkles" opacity="0">
+            <circle cx="55" cy="80" r="3" fill="#E8A87C"/>
+            <circle cx="125" cy="75" r="2" fill="#F0C4A0"/>
+            <circle cx="60" cy="95" r="2" fill="#C4714A"/>
+            <circle cx="120" cy="90" r="3" fill="#E8A87C"/>
+          </g>
+        </svg>
+        <div class="flower-caption" id="flowerCaption">Complete today's tasks to watch your flower bloom.</div>
+        <button class="btn-save" id="saveBtn" style="display:none" onclick="saveFlowerToGarden()">Add flower to garden</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">4. Garden</div>
+    <h2>Your garden</h2>
+    <div id="gardenGrid" class="garden-grid"></div>
+  </div>
+</main>
+
+<section class="chat-section">
+  <div class="chat-inner">
+    <div class="chat-header">
+      <h2>Get support now</h2>
+      <p>Chat with our AI companion for personalized recovery guidance</p>
+    </div>
+
+    <div class="chat-window" id="chatWindow">
+      <div class="empty-chat" id="emptyChat">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" stroke="#C4A882" stroke-width="1.5"/>
+          <path d="M10 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#C4A882" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="16" cy="20" r="2" fill="#C4A882"/>
+        </svg>
+        <p>Ask anything about your recovery.<br>I'm here to listen and guide.</p>
+      </div>
+      <div class="typing-indicator" id="typingIndicator">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="chat-input-row">
+      <textarea class="chat-input" id="chatInput" placeholder="Ask about your recovery..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}"
+        oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="disclaimer">Not a substitute for professional medical advice. In an emergency, call 911 or your care team immediately.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">HerBloom</div>
+      <div class="footer-brand-tagline">24/7 compassionate support for women recovering from gynecologic procedures.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#">Features</a>
+      <a href="#">How it works</a>
+      <a href="#">Security</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Recovery guide</a>
+      <a href="#">Provider portal</a>
+      <a href="#">Research</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">Contact</a>
+      <a href="#">About</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">Privacy policy</a>
+      <a href="#">Terms of service</a>
+      <a href="#">HIPAA compliance</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 HerBloom Health, Inc. All rights reserved.</span>
+    <span>Not a substitute for professional medical advice.</span>
+  </div>
+</footer>
+
+<script>
+let userProfile = {};
+let tasks = [];
+let completedCount = 0;
+let chatHistory = [];
+let activeGardenFlower = '';
+const GARDEN_STORAGE_KEY = 'herbloom-garden';
+
+const FEATHERLESS_API_KEY = "rc_3a5ea2001b87eff8ce6163ad2a4ab9373c184c98ecd2986efdbe0d8ea0a6f88b";
+const FEATHERLESS_BASE = "https://api.featherless.ai/v1";
+const MODEL = "meta-llama/Meta-Llama-3.1-8B-Instruct";
+
+function getChatSystemPrompt() {
+  const track = userProfile.track === 'csection' ? 'C-section' : 'miscarriage';
+  const days = userProfile.days || 'early';
+  return `You are HerBloom, a warm and compassionate recovery companion for women after ${track}.
+The user is approximately ${days} days post-procedure.
+
+Your role:
+- Provide gentle, evidence-based guidance on physical and emotional recovery
+- Normalize experiences that are common during recovery
+- ALWAYS recommend contacting a care provider for clinical concerns (pain, fever, bleeding, infection signs)
+- For miscarriage: acknowledge grief gently; never rush emotional processing; never imply a timeline for healing
+- For C-section: guide on wound care, movement, lifting limits, and normal recovery milestones
+- Keep responses concise, warm, and human - under 150 words unless the user asks for detail
+- CRITICAL: If user mentions fever over 100.4F, heavy bleeding soaking a pad per hour, chest pain, difficulty breathing, thoughts of self-harm - immediately direct to emergency services
+
+You are NOT a doctor. Always frame clinical information as general guidance and defer to their provider.`;
+}
+
+function getTaskSystemPrompt() {
+  const trackName = userProfile.track === 'csection' ? 'post C-section' : 'post miscarriage';
+  const days = userProfile.days;
+  const emotional = userProfile.emotional;
+  const name = userProfile.name;
+
+  return `You generate exactly 3 daily recovery tasks for ${name}, a woman ${days} days ${trackName}.
+Emotional context: "${emotional || 'no specific note'}"
+
+Return ONLY a JSON array with 3 objects. Each object has:
+- "title": short task name (under 8 words)
+- "description": one sentence of specific, actionable guidance (under 20 words)
+
+For C-section track: focus on wound care, movement, nutrition, rest, follow-up care appropriate for the day range.
+For miscarriage track: balance physical recovery with gentle emotional acknowledgment. Never use task language for grief - frame it as "space to" or "permission to".
+Be specific and appropriate to the day range. Never suggest anything medically unsafe.
+Return ONLY the JSON array, no other text.`;
+}
+
+async function startJourney() {
+  const name = document.getElementById('userName').value.trim();
+  const age = document.getElementById('userAge').value.trim();
+  const track = document.getElementById('userTrack').value;
+  const days = document.getElementById('userDays').value;
+  const emotional = document.getElementById('userEmotional').value.trim();
+
+  if (!name || !track) {
+    alert('Please enter your name and select a recovery track.');
+    return;
+  }
+
+  userProfile = { name, age, track, days, emotional };
+
+  const journeySection = document.getElementById('journeySection');
+  journeySection.style.display = 'grid';
+  journeySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  resetGardenButton();
+
+  const trackLabel = track === 'csection' ? 'Post C-section recovery' : 'Post miscarriage support';
+  document.getElementById('userContextBox').innerHTML =
+    `<strong>${name}${age ? ', age ' + age : ''}</strong><br>
+     Focus: ${trackLabel}<br>
+     ${emotional ? 'Emotional note: ' + emotional : ''}`;
+
+  const badge = document.createElement('span');
+  badge.className = `track-badge ${track}`;
+  badge.textContent = track === 'csection' ? 'C-Section Recovery' : 'Miscarriage Support';
+  document.getElementById('userContextBox').prepend(badge);
+  document.getElementById('userContextBox').querySelector('span').after(document.createElement('br'));
+
+  await generateTasks();
+  chatHistory = [];
+}
+
+async function generateTasks() {
+  const taskList = document.getElementById('taskList');
+  taskList.innerHTML = '<div class="generating-tasks"><span class="spinner"></span> Preparing your care path...</div>';
+
+  try {
+    const res = await fetch(`${FEATHERLESS_BASE}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${FEATHERLESS_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 400,
+        temperature: 0.6,
+        messages: [
+          { role: 'system', content: getTaskSystemPrompt() },
+          { role: 'user', content: 'Generate my 3 tasks for today.' }
+        ]
+      })
+    });
+
+    const data = await res.json();
+    const raw = data.choices?.[0]?.message?.content || '';
+    const clean = raw.replace(/```json|```/g, '').trim();
+    tasks = JSON.parse(clean);
+    renderTasks(tasks);
+  } catch (err) {
+    tasks = getDefaultTasks();
+    renderTasks(tasks);
+  }
+}
+
+function getDefaultTasks() {
+  if (userProfile.track === 'csection') {
+    return [
+      { title: 'Check in on your incision', description: 'Gently inspect for redness, swelling, or discharge and note any changes.' },
+      { title: 'Do one gentle body action', description: 'Try a slow 5-minute walk or seated deep breathing to support circulation.' },
+      { title: 'Support your emotional wellbeing', description: 'Spend 10 minutes doing something calming - journaling, music, or rest.' }
+    ];
+  }
+
+  return [
+    { title: 'Check in on your physical recovery', description: 'Note any cramping, bleeding, or discomfort and compare to yesterday.' },
+    { title: 'Give your body gentle care', description: 'Hydrate well and eat one nourishing meal without pressure or rules.' },
+    { title: 'Take space for your emotions', description: 'You have full permission to feel whatever comes up today - no timeline.' }
+  ];
+}
+
+function renderTasks(taskArray) {
+  const taskList = document.getElementById('taskList');
+  completedCount = 0;
+  taskList.innerHTML = '';
+
+  taskArray.forEach((task, i) => {
+    const div = document.createElement('div');
+    div.className = 'task-item fade-in';
+    div.style.animationDelay = `${i * 0.1}s`;
+    div.innerHTML = `
+      <div class="task-checkbox">
+        <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
+          <path d="M1 4l3 3.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="task-content">
+        <div class="task-title">${task.title}</div>
+        <div class="task-desc">${task.description}</div>
+      </div>`;
+
+    div.addEventListener('click', () => toggleTask(div));
+    taskList.appendChild(div);
+  });
+
+  updateProgress();
+  updateFlower(0);
+}
+
+function toggleTask(el) {
+  const wasDone = el.classList.contains('done');
+  el.classList.toggle('done');
+  completedCount += wasDone ? -1 : 1;
+  completedCount = Math.max(0, Math.min(tasks.length, completedCount));
+  updateProgress();
+  updateFlower(completedCount);
+}
+
+function updateProgress() {
+  const total = tasks.length || 3;
+  const pct = Math.round((completedCount / total) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('growthCount').textContent = `${completedCount} / ${total} tasks`;
+}
+
+function updateFlower(done) {
+  applyTrackFlower(done);
+
+  const stages = {
+    stem: done >= 1 ? 1 : 0,
+    leaf1: done >= 1 ? 1 : 0,
+    leaf2: done >= 2 ? 1 : 0,
+    bud: done === 1 ? 1 : 0,
+    petals: done >= 2 ? 1 : 0,
+    flowerCenter: done >= 2 ? 1 : 0,
+    flowerCenterInner: done >= 2 ? 1 : 0,
+    seed: done === 0 ? 1 : 0,
+    sparkles: done >= 3 ? 1 : 0
+  };
+
+  Object.entries(stages).forEach(([id, opacity]) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.transition = 'opacity 0.8s ease';
+      el.style.opacity = opacity;
+    }
+  });
+
+  const caption = document.getElementById('flowerCaption');
+  const saveBtn = document.getElementById('saveBtn');
+
+  if (done === 0) {
+    caption.textContent = "Complete today's tasks to watch your flower bloom.";
+    saveBtn.style.display = 'none';
+  } else if (done === 1) {
+    caption.textContent = 'Your stem is growing. Keep going.';
+    saveBtn.style.display = 'none';
+  } else if (done === 2) {
+    caption.textContent = 'Petals are opening. One more task!';
+    saveBtn.style.display = 'none';
+  } else {
+    caption.textContent = "Your flower is in full bloom. Today's journey is complete.";
+    saveBtn.style.display = 'inline-block';
+  }
+}
+
+function applyTrackFlower(done) {
+  const petals = document.getElementById('petals');
+  const petalEls = petals ? petals.querySelectorAll('ellipse') : [];
+  const flowerCenter = document.getElementById('flowerCenter');
+  const flowerCenterInner = document.getElementById('flowerCenterInner');
+  const bud = document.getElementById('bud');
+  const stem = document.getElementById('stem');
+  const leaf1 = document.getElementById('leaf1');
+  const leaf2 = document.getElementById('leaf2');
+  const sparkles = document.getElementById('sparkles');
+  const seed = document.getElementById('seed');
+
+  if (userProfile.track === 'miscarriage') {
+    const petalPalette = ['#C8DCC9', '#9DBFA0', '#DCE8DA', '#7A9E7E'];
+    petalEls.forEach((petal, index) => {
+      petal.setAttribute('fill', petalPalette[index] || petalPalette[0]);
+    });
+    if (bud) bud.setAttribute('fill', '#C8DCC9');
+    if (flowerCenter) flowerCenter.setAttribute('fill', '#7A9E7E');
+    if (flowerCenterInner) flowerCenterInner.setAttribute('fill', '#4A7050');
+    if (stem) stem.setAttribute('stroke', '#7A9E7E');
+    if (leaf1) leaf1.setAttribute('fill', '#7A9E7E');
+    if (leaf2) leaf2.setAttribute('fill', '#7A9E7E');
+    if (seed) seed.setAttribute('fill', '#B7C8B8');
+    if (sparkles) {
+      const dots = sparkles.querySelectorAll('circle');
+      const sparklePalette = ['#9DBFA0', '#DCE8DA', '#7A9E7E', '#C8DCC9'];
+      dots.forEach((dot, index) => dot.setAttribute('fill', sparklePalette[index] || sparklePalette[0]));
+    }
+    activeGardenFlower = buildGardenFlowerMarkup({
+      petals: petalPalette,
+      center: '#7A9E7E',
+      centerInner: '#4A7050',
+      bud: '#C8DCC9',
+      leaf: '#7A9E7E',
+      seed: '#B7C8B8',
+      sparkle: ['#9DBFA0', '#DCE8DA', '#7A9E7E', '#C8DCC9'],
+      petalShape: 'rounded'
+    });
+  } else {
+    const petalPalette = ['#E8A87C', '#E8A87C', '#F0C4A0', '#E8A87C'];
+    petalEls.forEach((petal, index) => {
+      petal.setAttribute('fill', petalPalette[index] || petalPalette[0]);
+    });
+    if (bud) bud.setAttribute('fill', '#E8C4A8');
+    if (flowerCenter) flowerCenter.setAttribute('fill', '#C4714A');
+    if (flowerCenterInner) flowerCenterInner.setAttribute('fill', '#9E5535');
+    if (stem) stem.setAttribute('stroke', '#7A9E7E');
+    if (leaf1) leaf1.setAttribute('fill', '#7A9E7E');
+    if (leaf2) leaf2.setAttribute('fill', '#7A9E7E');
+    if (seed) seed.setAttribute('fill', '#C4A882');
+    if (sparkles) {
+      const dots = sparkles.querySelectorAll('circle');
+      const sparklePalette = ['#E8A87C', '#F0C4A0', '#C4714A', '#E8A87C'];
+      dots.forEach((dot, index) => dot.setAttribute('fill', sparklePalette[index] || sparklePalette[0]));
+    }
+    activeGardenFlower = buildGardenFlowerMarkup({
+      petals: petalPalette,
+      center: '#C4714A',
+      centerInner: '#9E5535',
+      bud: '#E8C4A8',
+      leaf: '#7A9E7E',
+      seed: '#C4A882',
+      sparkle: ['#E8A87C', '#F0C4A0', '#C4714A', '#E8A87C'],
+      petalShape: 'tulip'
+    });
+  }
+
+  const flowerSvg = document.getElementById('flowerSvg');
+  flowerSvg.style.transform = done >= 3 ? 'scale(1.03)' : 'scale(1)';
+}
+
+function buildGardenFlowerMarkup(config) {
+  const isTulip = config.petalShape === 'tulip';
+  const petalMarkup = isTulip
+    ? `
+      <ellipse cx="90" cy="82" rx="10" ry="18" fill="${config.petals[0]}"/>
+      <ellipse cx="90" cy="82" rx="10" ry="18" fill="${config.petals[1]}" transform="rotate(45 90 100)"/>
+      <ellipse cx="90" cy="82" rx="10" ry="18" fill="${config.petals[2]}" transform="rotate(90 90 100)"/>
+      <ellipse cx="90" cy="82" rx="10" ry="18" fill="${config.petals[3]}" transform="rotate(135 90 100)"/>
+    `
+    : `
+      <ellipse cx="90" cy="78" rx="14" ry="14" fill="${config.petals[0]}"/>
+      <ellipse cx="74" cy="96" rx="12" ry="12" fill="${config.petals[1]}"/>
+      <ellipse cx="106" cy="96" rx="12" ry="12" fill="${config.petals[2]}"/>
+      <ellipse cx="90" cy="112" rx="13" ry="12" fill="${config.petals[3]}"/>
+    `;
+
+  return `
+    <svg viewBox="0 0 180 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="72" y="168" width="36" height="22" rx="4" fill="#C4714A" opacity="0.8"/>
+      <rect x="68" y="163" width="44" height="10" rx="5" fill="#9E5535" opacity="0.8"/>
+      <line x1="90" y1="163" x2="90" y2="110" stroke="${config.leaf}" stroke-width="4" stroke-linecap="round"/>
+      <ellipse cx="75" cy="138" rx="14" ry="7" fill="${config.leaf}" transform="rotate(-30 75 138)"/>
+      <ellipse cx="105" cy="125" rx="14" ry="7" fill="${config.leaf}" transform="rotate(30 105 125)"/>
+      <g>${petalMarkup}</g>
+      <circle cx="90" cy="100" r="12" fill="${config.center}"/>
+      <circle cx="90" cy="100" r="7" fill="${config.centerInner}"/>
+      <ellipse cx="90" cy="108" rx="8" ry="12" fill="${config.bud}" opacity="0.25"/>
+      <circle cx="55" cy="80" r="3" fill="${config.sparkle[0]}"/>
+      <circle cx="125" cy="75" r="2" fill="${config.sparkle[1]}"/>
+      <circle cx="60" cy="95" r="2" fill="${config.sparkle[2]}"/>
+      <circle cx="120" cy="90" r="3" fill="${config.sparkle[3]}"/>
+      <ellipse cx="90" cy="140" rx="7" ry="9" fill="${config.seed}" opacity="0.2"/>
+    </svg>
+  `;
+}
+
+function resetGardenButton() {
+  const saveBtn = document.getElementById('saveBtn');
+  saveBtn.classList.remove('saved');
+  saveBtn.textContent = 'Add flower to garden';
+}
+
+function saveFlowerToGarden() {
+  if (completedCount < (tasks.length || 3)) return;
+  const saveBtn = document.getElementById('saveBtn');
+  if (saveBtn.classList.contains('saved')) return;
+
+  const garden = loadGarden();
+  const entry = {
+    name: userProfile.name || 'Guest',
+    track: userProfile.track,
+    label: userProfile.track === 'csection' ? 'C-section bloom' : 'Miscarriage support bloom',
+    days: userProfile.days,
+    emotional: userProfile.emotional || 'No emotional note added',
+    createdAt: new Date().toLocaleDateString(),
+    markup: activeGardenFlower
+  };
+
+  garden.unshift(entry);
+  localStorage.setItem(GARDEN_STORAGE_KEY, JSON.stringify(garden.slice(0, 8)));
+  renderGarden();
+
+  saveBtn.classList.add('saved');
+  saveBtn.textContent = 'Added to garden';
+}
+
+function loadGarden() {
+  try {
+    return JSON.parse(localStorage.getItem(GARDEN_STORAGE_KEY) || '[]');
+  } catch (err) {
+    return [];
+  }
+}
+
+function renderGarden() {
+  const gardenGrid = document.getElementById('gardenGrid');
+  const garden = loadGarden();
+
+  if (!garden.length) {
+    gardenGrid.innerHTML = '<div class="garden-empty">Finish a daily journey and add your first flower here.</div>';
+    return;
+  }
+
+  gardenGrid.innerHTML = garden.map((entry) => `
+    <article class="garden-item">
+      ${entry.markup}
+      <div class="garden-name">${entry.name}'s ${entry.label}</div>
+      <div class="garden-meta">Saved ${entry.createdAt}<br>Day ${entry.days} recovery track</div>
+    </article>
+  `).join('');
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  document.getElementById('emptyChat').style.display = 'none';
+
+  addMessage('user', text);
+  input.value = '';
+  input.style.height = 'auto';
+
+  chatHistory.push({ role: 'user', content: text });
+
+  showTyping(true);
+  document.getElementById('sendBtn').disabled = true;
+
+  try {
+    const res = await fetch(`${FEATHERLESS_BASE}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${FEATHERLESS_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 300,
+        temperature: 0.7,
+        messages: [
+          { role: 'system', content: getChatSystemPrompt() },
+          ...chatHistory
+        ]
+      })
+    });
+
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content?.trim();
+
+    if (!reply) throw new Error('Empty response');
+
+    chatHistory.push({ role: 'assistant', content: reply });
+    showTyping(false);
+    addMessage('ai', reply);
+  } catch (err) {
+    showTyping(false);
+    if (FEATHERLESS_API_KEY === 'YOUR_FEATHERLESS_API_KEY') {
+      addMessage('error', 'Add your Featherless API key in the script to enable the AI companion.');
+    } else {
+      addMessage('error', "Couldn't reach the support companion. Please check your connection and try again.");
+    }
+  }
+
+  document.getElementById('sendBtn').disabled = false;
+}
+
+function addMessage(type, text) {
+  const win = document.getElementById('chatWindow');
+  const typing = document.getElementById('typingIndicator');
+  const div = document.createElement('div');
+  div.className = `msg ${type} fade-in`;
+  div.textContent = text;
+  win.insertBefore(div, typing);
+  win.scrollTop = win.scrollHeight;
+}
+
+function showTyping(visible) {
+  const el = document.getElementById('typingIndicator');
+  el.classList.toggle('visible', visible);
+  const win = document.getElementById('chatWindow');
+  win.scrollTop = win.scrollHeight;
+}
+
+renderGarden();
+</script>
+</body>
+</html>
