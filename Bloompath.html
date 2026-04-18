@@ -854,9 +854,17 @@ let chatHistory = [];
 let activeGardenFlower = '';
 const GARDEN_STORAGE_KEY = 'herbloom-garden';
 
+<<<<<<< HEAD
 const FEATHERLESS_API_KEY = "rc_3a5ea2001b87eff8ce6163ad2a4ab9373c184c98ecd2986efdbe0d8ea0a6f88b";
 const FEATHERLESS_BASE = "https://api.featherless.ai/v1";
 const MODEL = "meta-llama/Meta-Llama-3.1-8B-Instruct";
+=======
+// ─── FEATHERLESS API CONFIG ───────────────────────────────────────────────────
+// Replace with your actual Featherless API key
+const FEATHERLESS_API_KEY = "rc_3a5ea2001b87eff8ce6163ad2a4ab9373c184c98ecd2986efdbe0d8ea0a6f88b";
+const FEATHERLESS_BASE = "https://api.featherless.ai/v1";
+const MODEL = "meta-llama/Meta-Llama-3.1-8B-Instruct"; // or any model on Featherless
+>>>>>>> 93da366fd94acb8a72de6a0c0903b367bbe472de
 
 function getChatSystemPrompt() {
   const track = userProfile.track === 'csection' ? 'C-section' : 'miscarriage';
